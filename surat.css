@@ -1,0 +1,66 @@
+body {
+    margin: 0; padding: 0; min-height: 100vh;
+    background: #1a2a22; /* Sama gelapnya dengan Home */
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Lora', serif; color: #333;
+    overflow-x: hidden;
+}
+
+.paper-container {
+    position: relative;
+    width: 90%; max-width: 600px; /* Lebar maksimal di laptop */
+    background: #fdfbf7;
+    padding: 60px 40px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    transform: rotate(-1deg);
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+    margin: 20px auto; /* Margin biar gak mepet atas bawah di HP */
+}
+
+/* Responsive Mobile Adjustment */
+@media (max-width: 600px) {
+    .paper-container {
+        padding: 40px 20px;
+        width: 95%; /* Lebih lebar di HP */
+        transform: rotate(0deg); /* Di HP lurus aja biar rapi */
+        margin: 10px;
+    }
+    h1 { font-size: 2.2rem !important; margin-bottom: 20px !important; }
+    p { font-size: 1rem !important; }
+    .tape { width: 100px !important; height: 30px !important; top: -12px !important;}
+}
+
+.tape {
+    position: absolute; top: -15px; left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    width: 130px; height: 35px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive; font-size: 3rem;
+    color: #c0392b; text-align: center; margin-top: 0; margin-bottom: 30px;
+    border-bottom: 2px solid #d4af37; padding-bottom: 10px;
+    display: inline-block; width: 100%;
+}
+
+p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; }
+
+.signature {
+    text-align: right; font-weight: bold; margin-top: 40px;
+    font-style: italic; color: #1a2a22;
+}
+
+.back-link {
+    display: block; text-align: center; margin-top: 40px;
+    text-decoration: none; color: #999; font-size: 0.8rem;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+}
+.back-link:hover { color: #c0392b; }
+
+.decoration { position: absolute; font-size: 2rem; opacity: 0.8; }
+.top-left { top: 10px; left: 10px; transform: rotate(-45deg); }
+.btm-right { bottom: 10px; right: 10px; transform: rotate(135deg); }

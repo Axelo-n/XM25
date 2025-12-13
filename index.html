@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Christmas Greetings</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="snow-container" id="snow-container"></div>
+
+    <div class="glass-card">
+        
+        <div id="section-home" class="content-section section-active">
+            <h1 class="title">Merry Christmas!</h1>
+            <p class="subtitle">Enter your secret code to reveal your gift!<br><i>hint: Au20ra's 1st Anniversary</i></p>
+
+            <div class="input-group">
+                <input type="password" id="password" class="custom-input" placeholder="Si Paling:" autocomplete="off">
+                <div id="error-text" class="error-msg">Incorrect password, try again!</div>
+            </div>
+
+            <button class="btn-open" onclick="checkPassword()">
+                Open Letter <i class="fas fa-envelope-open-text" style="margin-left: 8px;"></i>
+            </button>
+
+            <p class="warning-note">Note: make sure to not open someone else's letter without permission!</p>
+
+            <div class="stealth-btn" onclick="showQR()" title="Show QR Code">
+                <i class="fas fa-qrcode"></i>
+            </div>
+        </div>
+
+        <div id="section-qr" class="content-section section-hidden">
+            <div class="qr-frame">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=MerryChristmas" alt="QR Code">
+            </div>
+            <h2 style="font-family:'Great Vibes'; color: var(--primary-gold); font-size: 2.2rem;">Scan Me</h2>
+            <p class="subtitle" style="margin-bottom: 15px;">Scan this to open your christmas letter!</p>
+            
+            <button class="back-to-home-btn" onclick="backToHome()">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- JSON CONFIGURATION ---
+        const pageList = {
+            "bintang": "surat_spesial.html",
+            "skena": "pages/Arka.html",
+            "gaslighting": "pages/Beben.html",
+            "mandarin": "pages/Call.html",
+            "dapur": "pages/Xyla.html",
+            "dance": "pages/Clau.html",
+            "receh": "pages/Vito.html",
+            "mini": "pages/Dea.html",
+            "galak": "pages/Diaz.html",
+            "cosplay": "pages/Evan.html",
+            "homesick": "pages/Henry.html",
+            "anteng": "pages/Vio.html",
+            "bucin": "pages/Ngurah.html",
+            "rental": "pages/Ivan.html",
+            "cerewet": "pages/Yuri.html",
+            "tiang": "pages/Jeri.html",
+            "tutor": "pages/Josh.html",
+            "star syndrome": "pages/Leon.html",
+            "tumbal": "pages/Abel.html",
+            "kurikulum": "pages/Mario.html",
+            "independent": "pages/Kirei.html",
+            "barista": "pages/Kevin.html",
+            "sanz": "pages/Rey.html",
+            "wts": "pages/Nicko.html",
+            "desain": "pages/Niki.html",
+            "musik": "pages/Rachma.html",
+            "salam": "pages/Otniel.html",
+            "vokalis": "pages/Shane.html",
+            "tiktok": "pages/Shinta.html",
+            "nego": "pages/Stephen.html",
+            "belanda": "pages/Kuki.html",
+            "raja": "pages/Thomas.html",
+            "basket": "pages/F.html",
+            "brainrot": "pages/M.html",
+            "random": "pages/Wilson.html",
+            "badminton": "pages/Yona.html",
+            "jonea": "pages/Jonea.html",
+            "mei": "pages/Mei.html",
+            "bioline": "pages/Olin.html",
+            "yonami": "pages/Yona.html",
+            "kevin": "pages/Kevin.html",
+            "nako": "pages/Shanes.html"
+        };
+
+        // --- NAVIGATION LOGIC ---
+        const qrSection = document.getElementById('section-qr');
+        const homeSection = document.getElementById('section-home');
+        const passInput = document.getElementById('password');
+        const errorText = document.getElementById('error-text');
+
+        // Fungsi dari Home -> QR
+        function showQR() {
+            homeSection.classList.remove('section-active');
+            homeSection.classList.add('section-hidden');
+            
+            // Clear input biar bersih pas balik
+            passInput.value = "";
+            errorText.style.display = 'none';
+
+            setTimeout(() => {
+                qrSection.classList.remove('section-hidden');
+                qrSection.classList.add('section-active');
+            }, 300);
+        }
+
+        // Fungsi dari QR -> Home
+        function backToHome() {
+            qrSection.classList.remove('section-active');
+            qrSection.classList.add('section-hidden');
+            
+            setTimeout(() => {
+                homeSection.classList.remove('section-hidden');
+                homeSection.classList.add('section-active');
+            }, 300);
+        }
+
+        function checkPassword() {
+            const code = passInput.value.toLowerCase().trim();
+            
+            if (pageList[code]) {
+                // Animasi card menghilang sebelum pindah
+                document.querySelector('.glass-card').style.transform = "scale(0.8) translateY(-50px)";
+                document.querySelector('.glass-card').style.opacity = "0";
+                
+                setTimeout(() => {
+                    window.location.href = pageList[code];
+                }, 500);
+            } else {
+                errorText.style.display = 'block';
+                passInput.classList.add('shake');
+                setTimeout(() => passInput.classList.remove('shake'), 500);
+            }
+        }
+
+        passInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") checkPassword();
+        });
+
+        // --- SNOW GENERATOR ---
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const count = 30; 
+            for(let i=0; i<count; i++){
+                let snow = document.createElement('div');
+                snow.className = 'snowflake';
+                snow.innerHTML = '❄';
+                snow.style.left = Math.random() * 100 + '%';
+                snow.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                snow.style.fontSize = (Math.random() * 10 + 5) + 'px';
+                snow.style.opacity = Math.random();
+                container.appendChild(snow);
+            }
+        }
+        createSnow();
+    </script>
+</body>
+</html>

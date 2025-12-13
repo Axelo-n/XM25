@@ -1,0 +1,152 @@
+:root {
+    --primary-gold: #d4af37;
+    --deep-red: #c0392b;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-light: #fdfdfd;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: radial-gradient(circle at center, #1a2a22, #000000);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: var(--text-light);
+    perspective: 1000px;
+}
+
+/* Background FX */
+.bg-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1544274404-b97c234a4c6a?q=80&w=2070&auto=format&fit=crop'); 
+    background-size: cover; background-position: center;
+    opacity: 0.2; z-index: -2;
+}
+
+.snow-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: -1;
+}
+
+.snowflake {
+    position: absolute; top: -10px; color: white; opacity: 0.8;
+    font-size: 10px; animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10px) translateX(0px) rotate(0deg); opacity: 1;}
+    100% { transform: translateY(100vh) translateX(20px) rotate(360deg); opacity: 0.3;}
+}
+
+/* MAIN CARD - Responsive Logic Added */
+.glass-card {
+    width: 90%;
+    max-width: 420px;
+    /* Flex height agar pas di HP kecil */
+    min-height: 500px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Responsive Fix untuk Mobile */
+@media (max-width: 480px) {
+    .glass-card {
+        padding: 30px 20px;
+        min-height: 450px;
+        width: 95%;
+    }
+    h1.title { font-size: 3rem !important; }
+    .subtitle { font-size: 0.8rem !important; }
+    .btn-open { padding: 12px 30px !important; }
+    .paper-container { font-size: 1rem; }
+}
+
+/* Sections Logic */
+.content-section {
+    position: absolute; width: 100%; left: 0; padding: 0 40px;
+    backface-visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+@media (max-width: 480px) { .content-section { padding: 0 20px; } }
+
+.section-hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+.section-active { opacity: 1; pointer-events: all; transform: scale(1); }
+
+/* QR Styling */
+.qr-frame {
+    background: rgba(255,255,255,0.9); padding: 15px; border-radius: 20px;
+    display: inline-block; margin-bottom: 25px;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); position: relative;
+}
+.qr-frame img { width: 100%; max-width: 180px; height: auto; }
+
+/* Login Styling */
+h1.title {
+    font-family: 'Great Vibes', cursive; font-size: 3.5rem;
+    color: var(--primary-gold); margin-bottom: 5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    line-height: 100%;
+}
+p.subtitle { font-size: 0.9rem; opacity: 0.8; margin-bottom: 30px; line-height: 1.6; }
+
+.input-group { position: relative; margin-bottom: 25px; }
+.custom-input {
+    width: 100%; background: rgba(0,0,0,0.2); border: none;
+    border-bottom: 2px solid rgba(255,255,255,0.3); padding: 15px 10px;
+    color: white; font-size: 1rem; text-align: center; letter-spacing: 2px;
+    transition: 0.3s; outline: none; border-radius: 5px 5px 0 0;
+}
+.custom-input:focus { background: rgba(0,0,0,0.4); border-bottom-color: var(--primary-gold); }
+.custom-input::placeholder { color: rgba(255,255,255,0.4); letter-spacing: 1px;}
+
+.btn-open {
+    background: linear-gradient(135deg, var(--primary-gold), #b8860b);
+    color: #1a2a22; border: none; padding: 15px 40px; border-radius: 50px;
+    font-weight: 600; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s; width: 100%;
+}
+.btn-open:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+
+.warning-note { font-size: 0.7rem; color: #ff6b6b; margin-top: 25px; font-style: italic; opacity: 0.9; }
+.error-msg { color: #ff4757; font-size: 0.8rem; margin-top: 10px; min-height: 20px; font-weight: 600; display: none; }
+
+/* --- STEALTH / BACK BUTTONS --- */
+.stealth-btn {
+    position: absolute; bottom: 15px; right: 15px;
+    color: rgba(255,255,255,0.3); /* Sedikit terlihat sesuai request */
+    cursor: pointer; font-size: 1.2rem; transition: 0.4s; z-index: 100;
+}
+.stealth-btn:hover { color: var(--primary-gold); opacity: 1; transform: scale(1.1); }
+
+.back-to-home-btn {
+    margin-top: 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
+    color: #ccc; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem;
+    cursor: pointer; transition: 0.3s;
+}
+.back-to-home-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* Shake Animation */
+.shake { animation: shake 0.5s; border-bottom-color: #ff4757 !important; }
+@keyframes shake {
+    0% { transform: translateX(0); } 25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); } 75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
